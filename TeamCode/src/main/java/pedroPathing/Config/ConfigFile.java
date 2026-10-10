@@ -15,9 +15,10 @@ public class ConfigFile {
     public static double DEADZONE = 50;
     public static double CLOSE_ERROR_THRESHOLD = 150;
 
-    public static double SERVO_POS_DOWN = 0.9;
-    public static double SERVO_POS_MID = 0.505;
-    public static double SERVO_POS_UP = 0.29;
+    public static double SERVO_POS_DOWN = 1.0;
+    //public static double SERVO_POS_MID = 0.505;
+    public static double SERVO_POS_MID = 0.65;
+    public static double SERVO_POS_UP = 0.05;
 
     public static double TICK_STEP = 179.23;
 

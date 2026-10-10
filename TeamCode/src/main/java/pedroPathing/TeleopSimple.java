@@ -13,6 +13,7 @@ import static pedroPathing.Config.ConfigFile.REVkD;
 import static pedroPathing.Config.ConfigFile.REVkDClose;
 import static pedroPathing.Config.ConfigFile.REVkP;
 import static pedroPathing.Config.ConfigFile.REVkPClose;
+import static pedroPathing.Config.ConfigFile.SERVO_POS_DOWN;
 import static pedroPathing.Config.ConfigFile.SERVO_POS_MID;
 import static pedroPathing.Config.ConfigFile.SERVO_POS_UP;
 import static pedroPathing.Config.ConfigFile.TICK_STEP;
@@ -60,6 +61,8 @@ public class TeleopSimple extends OpMode {
     private boolean prevLeftStickButton = false;
     private boolean prevRightStickButton = false;
 
+    double pushServoCommand=SERVO_POS_MID;
+
     @Override
     public void init() {
         follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
@@ -83,7 +86,11 @@ public class TeleopSimple extends OpMode {
         revolver.setPower(0);
         revolverTimer.reset();
         pushServo = hardwareMap.get(Servo.class, "pushServo");
-        pushServo.setPosition(SERVO_POS_UP);
+        pushServo.setPosition(pushServoCommand);
+
+        telemetry.addData("Push Servo Y", gamepad1.y);
+        telemetry.addData("Push Servo X", gamepad1.x);
+        telemetry.addData("Push Servo Command", pushServoCommand);
     }
 
     @Override
@@ -115,7 +122,7 @@ public class TeleopSimple extends OpMode {
         revolverTimer.reset();
         if (dt <= 0) return;
 
-         pushServo.setPosition(SERVO_POS_MID);
+
 
         double currentTicks = revolver.getCurrentPosition();
         revolverError = targetTicks - currentTicks;
@@ -170,11 +177,19 @@ public class TeleopSimple extends OpMode {
 
         if (gamepad1.dpad_left && !prevDpadLeft) {
             targetTicks -= TICK_STEP;
+            if (pushServo.getPosition() != SERVO_POS_MID) {
+                pushServo.setPosition(SERVO_POS_MID);
+            }
+
         }
 
         if (gamepad1.dpad_right && !prevDpadRight) {
             targetTicks += TICK_STEP;
+            if (pushServo.getPosition() != SERVO_POS_MID) {
+                pushServo.setPosition(SERVO_POS_MID);
+            }
         }
+        revolverSpin(targetTicks);
 
         if (launcherOn) {
             targetVelocity = (Math.round((PidInputSpeed * 1960) / 20.0) * 20) - 10;
@@ -194,10 +209,21 @@ public class TeleopSimple extends OpMode {
             launcherError = 0;
         }
 
-        revolverSpin(targetTicks);
 
-        double pushServoCommand = gamepad1.y ? SERVO_POS_UP : SERVO_POS_MID;
-        pushServo.setPosition(pushServoCommand);
+
+
+        if (gamepad1.y) {
+            pushServoCommand=SERVO_POS_UP;
+            pushServo.setPosition(pushServoCommand);
+        }
+        if (gamepad1.x) {
+            pushServoCommand=SERVO_POS_DOWN;
+            pushServo.setPosition(pushServoCommand);
+        }
+
+
+//        double pushServoCommand = gamepad1.y ? SERVO_POS_UP : SERVO_POS_MID;
+//        pushServo.setPosition(pushServoCommand);
 
         if (!follower.isBusy()) {
             follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x * 0.5, true);
