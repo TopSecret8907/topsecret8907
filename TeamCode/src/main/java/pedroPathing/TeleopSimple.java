@@ -176,6 +176,7 @@ public class TeleopSimple extends OpMode {
         if (gamepad1.b && !prevIntakeButton) {
             intakeOn = !intakeOn;
             intakeMotor.setPower(intakeOn ? 1.0 : 0.0);
+            pushServo.setPosition(SERVO_POS_UP);
         }
 
         if (gamepad1.left_stick_button && !prevLeftStickButton) {
