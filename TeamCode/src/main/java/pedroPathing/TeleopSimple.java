@@ -38,6 +38,7 @@ public class TeleopSimple extends OpMode {
     private DcMotorEx launcher;
     private DcMotorEx launcher2;
     private DcMotorEx revolver;
+    private DcMotorEx intakeMotor;
     private Servo pushServo;
 
     private ElapsedTime pidTimer = new ElapsedTime();
@@ -60,6 +61,8 @@ public class TeleopSimple extends OpMode {
     private boolean prevDpadRight = false;
     private boolean prevLeftStickButton = false;
     private boolean prevRightStickButton = false;
+    private boolean intakeOn = false;
+    private boolean prevIntakeButton = false;
 
     double pushServoCommand=SERVO_POS_MID;
 
@@ -85,6 +88,11 @@ public class TeleopSimple extends OpMode {
         revolver.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         revolver.setPower(0);
         revolverTimer.reset();
+
+        intakeMotor = hardwareMap.get(DcMotorEx.class, "intakeMotor");
+        intakeMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        intakeMotor.setPower(0);
+
         pushServo = hardwareMap.get(Servo.class, "pushServo");
         pushServo.setPosition(pushServoCommand);
 
@@ -165,6 +173,11 @@ public class TeleopSimple extends OpMode {
             launcherOn = !launcherOn;
         }
 
+        if (gamepad1.b && !prevIntakeButton) {
+            intakeOn = !intakeOn;
+            intakeMotor.setPower(intakeOn ? 1.0 : 0.0);
+        }
+
         if (gamepad1.left_stick_button && !prevLeftStickButton) {
             PidInputSpeed -= 0.01;
         }
@@ -235,6 +248,8 @@ public class TeleopSimple extends OpMode {
         telemetry.addData("Launcher Speed", currentVelocity);
         telemetry.addData("Launcher Input %", PidInputSpeed);
         telemetry.addData("Launcher Error", launcherError);
+        telemetry.addData("Intake On", intakeOn);
+        telemetry.addData("Intake Power", intakeMotor.getPower());
         telemetry.addData("Revolver Target Ticks", targetTicks);
         telemetry.addData("Revolver Error", revolverError);
         telemetry.addData("Push Servo Y", gamepad1.y);
@@ -248,6 +263,7 @@ public class TeleopSimple extends OpMode {
         prevDpadRight = gamepad1.dpad_right;
         prevLeftStickButton = gamepad1.left_stick_button;
         prevRightStickButton = gamepad1.right_stick_button;
+        prevIntakeButton = gamepad1.b;
 
         follower.update();
         telemetry.update();
@@ -255,5 +271,6 @@ public class TeleopSimple extends OpMode {
 
     @Override
     public void stop() {
+        intakeMotor.setPower(0);
     }
 }
