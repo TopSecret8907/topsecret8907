@@ -21,12 +21,17 @@ import static pedroPathing.Config.ConfigFile.loopTime;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
+import com.qualcomm.hardware.limelightvision.LLResult;
+import com.qualcomm.hardware.limelightvision.LLResultTypes;
+import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import java.util.List;
 
 import pedroPathing.constants.FConstants;
 import pedroPathing.constants.LConstants;
@@ -64,6 +69,7 @@ public class TeleopSimple extends OpMode {
     private boolean intakeOn = false;
     private boolean prevIntakeButton = false;
 
+    private Limelight3A limelight;
     double pushServoCommand=SERVO_POS_MID;
 
     @Override
@@ -99,6 +105,15 @@ public class TeleopSimple extends OpMode {
         telemetry.addData("Push Servo Y", gamepad1.y);
         telemetry.addData("Push Servo X", gamepad1.x);
         telemetry.addData("Push Servo Command", pushServoCommand);
+
+        // Get the Limelight from the config
+        limelight = hardwareMap.get(Limelight3A.class, "limelight");
+        limelight.pipelineSwitch(4);
+
+        // Start streaming data
+        limelight.start();
+
+        telemetry.setMsTransmissionInterval(50);
     }
 
     @Override
@@ -242,6 +257,28 @@ public class TeleopSimple extends OpMode {
         if (!follower.isBusy()) {
             follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x * 0.5, true);
         }
+
+        LLResult result = limelight.getLatestResult();
+
+        if (result != null && result.isValid()) {
+            // Grab AprilTag results
+            List<LLResultTypes.FiducialResult> fiducials = result.getFiducialResults();
+
+            if (fiducials != null && !fiducials.isEmpty()) {
+                // Loop through all detected tags
+                for (LLResultTypes.FiducialResult fr : fiducials) {
+                    int tagId = fr.getFiducialId();
+
+                    telemetry.addData("Tag ID", tagId);
+                }
+            } else {
+                telemetry.addLine("Valid result, but no AprilTags detected.");
+            }
+        } else {
+            telemetry.addLine("No target detected.");
+        }
+
+        
 
         telemetry.addData("Launcher On", launcherOn);
         telemetry.addData("Launcher Power", launcher.getPower());
