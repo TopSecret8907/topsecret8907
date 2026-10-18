@@ -278,7 +278,7 @@ public class TeleopSimple extends OpMode {
             telemetry.addLine("No target detected.");
         }
 
-        
+
 
         telemetry.addData("Launcher On", launcherOn);
         telemetry.addData("Launcher Power", launcher.getPower());
