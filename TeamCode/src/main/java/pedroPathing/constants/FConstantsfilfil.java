@@ -10,7 +10,7 @@ public class FConstantsfilfil {
 
     static {
 
-        //FollowerConstants.localizers = Localizers.PINPOINT;
+        FollowerConstants.localizers = Localizers.PINPOINT;
 
         FollowerConstants.leftFrontMotorName = "frontLeft";
         FollowerConstants.leftRearMotorName = "backLeft";
