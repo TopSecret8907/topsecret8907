@@ -20,7 +20,7 @@ public class AutoSimple extends OpMode {
 
     /* Define Poses - Converted from your PoseFactory logic */
     private final Pose startPose = new Pose(56, 8, Math.toRadians(90));
-    private final Pose pose1 = new Pose(56, 20, Math.toRadians(180));
+    private final Pose pose1 = new Pose(56, 20, Math.toRadians(90));
     private final Pose point2 = new Pose(33.4728, 81.6703, Math.toRadians(-16.6293));
     private final Pose point3 = new Pose(36.6558, 34.4783, Math.toRadians(93.8586));
 
@@ -62,6 +62,11 @@ public class AutoSimple extends OpMode {
     }
 
     @Override
+    public void stop() {
+        follower.update();
+    }
+
+    @Override
     public void loop() {
         follower.update();
 
@@ -87,9 +92,10 @@ public class AutoSimple extends OpMode {
                 break;
 
             case 3: // Final State
-                if (!follower.isBusy()) {
-                    telemetry.addData("Status", "Done!");
-                }
+                //if (!follower.isBusy()) {
+                //    telemetry.addData("Status", "Done!");
+                //}
+                stop();
                 break;
         }
 

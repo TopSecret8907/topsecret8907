@@ -17,7 +17,7 @@ public class LimelightAprilTag extends OpMode {
     public void init() {
         // Get the Limelight from the config
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
-        limelight.pipelineSwitch(4);
+        limelight.pipelineSwitch(1);
 
         // Start streaming data
         limelight.start();
