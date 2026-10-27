@@ -1,5 +1,7 @@
 package pedroPathing;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.pedropathing.follower.Follower;
@@ -47,6 +49,8 @@ public class AutoSimple extends OpMode {
 
     @Override
     public void init() {
+        // Send all telemetry to both the Driver Station and FTC Dashboard.
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         pathTimer = new Timer();
         follower = new Follower(hardwareMap, FConstantsfilfil.class, LConstants.class);
         follower.setStartingPose(startPose);
@@ -54,6 +58,7 @@ public class AutoSimple extends OpMode {
         buildPaths();
 
         telemetry.addData("Status", "Initialized");
+        telemetry.update();
     }
 
     @Override
@@ -103,6 +108,10 @@ public class AutoSimple extends OpMode {
         // Feedback
         telemetry.addData("Path State", pathState);
         telemetry.addData("Position", follower.getPose().toString());
+        telemetry.addData("X", follower.getPose().getX());
+        telemetry.addData("Y", follower.getPose().getY());
+        telemetry.addData("Heading (deg)", Math.toDegrees(follower.getPose().getHeading()));
         follower.telemetryDebug(telemetry);
+        telemetry.update();
     }
 }
