@@ -9,6 +9,7 @@ import com.pedropathing.pathgen.Path;
 import com.pedropathing.pathgen.Point;
 import com.pedropathing.util.Timer;
 import pedroPathing.constants.FConstants;
+import pedroPathing.constants.FConstantsfilfil;
 import pedroPathing.constants.LConstants;
 
 @Autonomous(name = "AutoSimple", group = "Adon")
@@ -47,7 +48,7 @@ public class AutoSimple extends OpMode {
     @Override
     public void init() {
         pathTimer = new Timer();
-        follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
+        follower = new Follower(hardwareMap, FConstantsfilfil.class, LConstants.class);
         follower.setStartingPose(startPose);
 
         buildPaths();
