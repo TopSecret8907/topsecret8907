@@ -69,7 +69,10 @@ public class AutoSimple extends OpMode {
 
     @Override
     public void stop() {
-        follower.update();
+        if (follower != null) {
+            follower.breakFollowing();
+        }
+        requestOpModeStop();
     }
 
     @Override
@@ -98,10 +101,8 @@ public class AutoSimple extends OpMode {
                 break;
 
             case 3: // Final State
-                //if (!follower.isBusy()) {
-                //    telemetry.addData("Status", "Done!");
-                //}
                 stop();
+                telemetry.addData("Status", "Stopped");
                 break;
         }
 
