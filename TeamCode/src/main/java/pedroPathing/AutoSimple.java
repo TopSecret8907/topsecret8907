@@ -22,8 +22,8 @@ public class AutoSimple extends OpMode {
     private int pathState = 0;
 
     /* Define Poses - Converted from your PoseFactory logic */
-    private final Pose startPose = new Pose(56, 8, Math.toRadians(90));
-    private final Pose pose1 = new Pose(56, 20, Math.toRadians(90));
+    private final Pose startPose = new Pose(0, 0, Math.toRadians(90));
+    private final Pose pose1 = new Pose(0, -10, Math.toRadians(90));
     private final Pose point2 = new Pose(33.4728, 81.6703, Math.toRadians(-16.6293));
     private final Pose point3 = new Pose(36.6558, 34.4783, Math.toRadians(93.8586));
 
@@ -52,19 +52,24 @@ public class AutoSimple extends OpMode {
         // Send all telemetry to both the Driver Station and FTC Dashboard.
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         pathTimer = new Timer();
-        follower = new Follower(hardwareMap, FConstantsfilfil.class, LConstants.class);
+        follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
         follower.setStartingPose(startPose);
 
         buildPaths();
 
-        telemetry.addData("Status", "Initialized");
-        telemetry.update();
+
     }
 
     @Override
     public void start() {
         pathState = 0;
         pathTimer.resetTimer();
+        telemetry.addData("Status", "Initialized");
+        telemetry.addData("Position", follower.getPose().toString());
+        telemetry.addData("X", follower.getPose().getX());
+        telemetry.addData("Y", follower.getPose().getY());
+        telemetry.addData("Heading (deg)", Math.toDegrees(follower.getPose().getHeading()));
+        telemetry.update();
     }
 
     @Override
