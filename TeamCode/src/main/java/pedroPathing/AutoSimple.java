@@ -22,10 +22,10 @@ public class AutoSimple extends OpMode {
     private int pathState = 0;
 
     /* Define Poses - Converted from your PoseFactory logic */
-    private final Pose startPose = new Pose(0, 0, Math.toRadians(90));
-    private final Pose pose1 = new Pose(0, -10, Math.toRadians(90));
-    private final Pose point2 = new Pose(33.4728, 81.6703, Math.toRadians(-16.6293));
-    private final Pose point3 = new Pose(36.6558, 34.4783, Math.toRadians(93.8586));
+    private final Pose startPose = new Pose(0, 0, Math.toRadians(45));
+    private final Pose pose1 = new Pose(0, 10, Math.toRadians(45));
+    private final Pose point2 = new Pose(0, 81.6703, Math.toRadians(45));
+    private final Pose point3 = new Pose(0, 34.4783, Math.toRadians(45));
 
     /* Define Paths */
     private Path path1, path2, path3;
@@ -88,7 +88,7 @@ public class AutoSimple extends OpMode {
         switch (pathState) {
             case 0: // Start Path 1
                 follower.followPath(path1);
-                pathState = 3;
+                pathState = 1;
                 break;
 
             case 1: // Wait for Path 1 to finish
