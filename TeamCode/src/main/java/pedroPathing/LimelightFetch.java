@@ -1,4 +1,4 @@
-package pedroPathing.LimelightTests;
+package pedroPathing;
 
 import static pedroPathing.Config.LimelightManager.xOffset;
 import static pedroPathing.Config.LimelightManager.yOffset;
@@ -12,7 +12,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import pedroPathing.Config.LimelightManager;
-import pedroPathing.Config.randomClass;
 import pedroPathing.constants.FConstants;
 import pedroPathing.constants.LConstants;
 

@@ -33,7 +33,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.List;
 
-import pedroPathing.constants.FConstants;
+import pedroPathing.constants.FConstantsfilfil;
 import pedroPathing.constants.LConstants;
 
 @TeleOp(name = "TeleopFilfil", group = "adon")
@@ -70,7 +70,7 @@ public class TeleopFilfil extends OpMode {
 
     @Override
     public void init() {
-        follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
+        follower = new Follower(hardwareMap, FConstantsfilfil.class, LConstants.class);
         follower.setStartingPose(new Pose(0, 0, 0));
         pidTimer.reset();
 
@@ -85,7 +85,7 @@ public class TeleopFilfil extends OpMode {
 
 
 
-        intakeMotor = hardwareMap.get(DcMotorEx.class, "intakeMotor");
+        intakeMotor = hardwareMap.get(DcMotorEx.class, "intake");
         intakeMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         intakeMotor.setPower(0);
 
@@ -94,11 +94,11 @@ public class TeleopFilfil extends OpMode {
 
 
         // Get the Limelight from the config
-        limelight = hardwareMap.get(Limelight3A.class, "limelight");
-        limelight.pipelineSwitch(4);
-
-        // Start streaming data
-        limelight.start();
+//        limelight = hardwareMap.get(Limelight3A.class, "limelight");
+//        limelight.pipelineSwitch(4);
+//
+//        // Start streaming data
+//        limelight.start();
 
         telemetry.setMsTransmissionInterval(50);
     }
@@ -210,6 +210,7 @@ public class TeleopFilfil extends OpMode {
 
 
 
+//        telemetry.addData("Launcher On", launcherOn);
 //        telemetry.addData("Launcher On", launcherOn);
 //        telemetry.addData("Launcher Power", launcher.getPower());
 //        telemetry.addData("Launcher Target", targetVelocity);
