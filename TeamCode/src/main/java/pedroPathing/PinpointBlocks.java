@@ -20,7 +20,8 @@
  *   SOFTWARE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package pedroPathing;
+
 
 import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
@@ -28,6 +29,7 @@ import org.firstinspires.ftc.robotcore.external.ExportToBlocks;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+import org.firstinspires.ftc.robotcore.external.navigation.UnnormalizedAngleUnit;
 
 import java.util.List;
 
@@ -82,12 +84,12 @@ public class PinpointBlocks extends BlocksOpModeCompanion {
             loopTime = odo.getLoopTime();
             xEncoder = odo.getEncoderX();
             yEncoder = odo.getEncoderY();
-            posX = odo.getPosX();
-            posY = odo.getPosY();
-            posH = odo.getHeading();
-            velX = odo.getVelX();
-            velY = odo.getVelY();
-            velH = odo.getHeadingVelocity();
+            posX = odo.getPosX(DistanceUnit.MM);
+            posY = odo.getPosY(DistanceUnit.MM);
+            posH = odo.getHeading(AngleUnit.DEGREES);
+            velX = odo.getVelX(DistanceUnit.MM);
+            velY = odo.getVelY(DistanceUnit.MM);
+            velH = odo.getHeadingVelocity(UnnormalizedAngleUnit.DEGREES);
         }
     }
 
@@ -134,7 +136,7 @@ public class PinpointBlocks extends BlocksOpModeCompanion {
         pinpoints = hardwareMap.getAll(GoBildaPinpointDriver.class);
         if (!pinpoints.isEmpty()) {
             GoBildaPinpointDriver odo = pinpoints.get(0);
-            odo.setEncoderResolution(unit.toMm(res));
+            odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
         }
     }
 
@@ -152,7 +154,7 @@ public class PinpointBlocks extends BlocksOpModeCompanion {
         pinpoints = hardwareMap.getAll(GoBildaPinpointDriver.class);
         if (!pinpoints.isEmpty()) {
             GoBildaPinpointDriver odo = pinpoints.get(0);
-            odo.setOffsets(unit.toMm(xOffset), unit.toMm(yOffset));
+            odo.setOffsets(unit.toMm(xOffset), unit.toMm(yOffset), DistanceUnit.MM);
         }
     }
 

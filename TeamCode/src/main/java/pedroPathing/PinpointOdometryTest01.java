@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package pedroPathing;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -36,7 +36,7 @@ public class PinpointOdometryTest01 extends LinearOpMode {
       PinpointBlocks.reverseEncoders(false, false);
       while (opModeIsActive()) {
         PinpointBlocks.update();
-        moveToPoint(null, null, null);
+        //moveToPoint(null, null, null);
         updateTelemetry2();
       }
     }
@@ -49,7 +49,9 @@ public class PinpointOdometryTest01 extends LinearOpMode {
     double rotation;
     double xpower;
     double ypower;
-
+    telemetry.addData("targetr", Double.parseDouble(JavaUtil.formatNumber(targetr, 3)));
+    telemetry.addData("targetx", Double.parseDouble(JavaUtil.formatNumber(targetx, 3)));
+    telemetry.addData("targety", Double.parseDouble(JavaUtil.formatNumber(targety, 3)));
     currentr = PinpointBlocks.orientation(AngleUnit.DEGREES);
     currentx = PinpointBlocks.xPosition(DistanceUnit.MM);
     currenty = PinpointBlocks.yPosition(DistanceUnit.MM);
@@ -80,9 +82,6 @@ public class PinpointOdometryTest01 extends LinearOpMode {
     telemetry.addData("currentr", Double.parseDouble(JavaUtil.formatNumber(currentr, 3)));
     telemetry.addData("currentx", Double.parseDouble(JavaUtil.formatNumber(currentx, 3)));
     telemetry.addData("currenty", Double.parseDouble(JavaUtil.formatNumber(currenty, 3)));
-    telemetry.addData("targetr", Double.parseDouble(JavaUtil.formatNumber(targetr, 3)));
-    telemetry.addData("targetx", Double.parseDouble(JavaUtil.formatNumber(targetx, 3)));
-    telemetry.addData("targety", Double.parseDouble(JavaUtil.formatNumber(targety, 3)));
     telemetry.update();
   }
 }
