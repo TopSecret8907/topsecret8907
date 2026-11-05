@@ -15,8 +15,8 @@ public final class BioBuzzLConstants {
         PinpointConstants.distanceUnit = DistanceUnit.MM;
         // Pinpoint X offset = lateral location of forward pod; Y = forward location
         // of strafe pod. Both are signed distances from the robot's rotation center.
-        PinpointConstants.forwardY = 145.0;
-        PinpointConstants.strafeX = -100.0;
+        PinpointConstants.forwardY = -143.95;
+        PinpointConstants.strafeX = -90.1;
         PinpointConstants.useCustomEncoderResolution = false;
         PinpointConstants.encoderResolution =
                 GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD;
